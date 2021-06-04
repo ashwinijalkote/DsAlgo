@@ -9,9 +9,7 @@ class ProducerConsumer {
 
     public static void main(String args[]) {
 
-        Object fullCondition = new Object();
-        Object emptyCondition = new Object();
-        SharedQueue q = new SharedQueue(fullCondition, emptyCondition);
+        SharedQueue q = new SharedQueue();
         Producer  producer1= new Producer(q, "producer1");
       //  Producer  producer2= new Producer(q, "producer1");
         Consumer  consumer1= new Consumer(q, "consumer1");
@@ -23,14 +21,10 @@ class ProducerConsumer {
 class SharedQueue {
     int elts[];
     private static int MAX_CAPACITY = 5;
-    Object fullCondition;
-    Object emptyCondition;
 
 
     int cnt=0;
-    SharedQueue(Object fullCondition, Object emptyCondition) {
-        this.fullCondition = fullCondition;
-                this.emptyCondition = emptyCondition;
+    SharedQueue() {
         elts = new int[MAX_CAPACITY];
     }
 

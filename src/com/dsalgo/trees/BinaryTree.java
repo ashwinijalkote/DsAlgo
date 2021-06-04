@@ -94,6 +94,22 @@ class BinaryTree {
             System.out.print(entry.getValue().data + "\t");
         }
     }
+
+    public void printBFS(BinaryTree binaryTree) {
+        Node root = binaryTree.root;
+
+        LinkedList<Node> queue = new LinkedList<>();
+        queue.add(root);
+
+        System.out.println();
+        while(!queue.isEmpty()) {
+            Node temp = queue.remove();
+            if (temp == null) continue;
+            System.out.print(temp.data + "\t");
+            queue.add(temp.left);
+            queue.add(temp.right);
+        }
+    }
 }
 
 class main {
