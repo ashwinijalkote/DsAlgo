@@ -6,22 +6,22 @@ public class FlipTree {
 
 
     public static  void main(String args[]) {
-        BinaryTree binaryTree = new BinaryTree();
-        binaryTree.insert(5);
-        binaryTree.insert(10);
-        binaryTree.insert(2);
-        binaryTree.insert(11);
-        binaryTree.insert(1);
-        binaryTree.insert(3);
-        binaryTree.insert(8);
-        binaryTree.insert(9);
-        binaryTree.printBFS(binaryTree);
-        binaryTree = flipTree(binaryTree);
-        binaryTree.printBFS(binaryTree);
+        BinarySearchTree binarySearchTree = new BinarySearchTree();
+        binarySearchTree.insert(5);
+        binarySearchTree.insert(10);
+        binarySearchTree.insert(2);
+        binarySearchTree.insert(11);
+        binarySearchTree.insert(1);
+        binarySearchTree.insert(3);
+        binarySearchTree.insert(8);
+        binarySearchTree.insert(9);
+        binarySearchTree.printBFS(binarySearchTree);
+        binarySearchTree = flipTree(binarySearchTree);
+        binarySearchTree.printBFS(binarySearchTree);
     }
 
-    private static BinaryTree flipTree(BinaryTree binaryTree) {
-        Node root = binaryTree.root;
+    private static BinarySearchTree flipTree(BinarySearchTree binarySearchTree) {
+        Node root = binarySearchTree.root;
         LinkedList<Node> queue = new LinkedList<>();
 
         queue.add(root);
@@ -37,6 +37,6 @@ public class FlipTree {
             parent.right = temp;
         }
 
-        return binaryTree;
+        return binarySearchTree;
     }
 }

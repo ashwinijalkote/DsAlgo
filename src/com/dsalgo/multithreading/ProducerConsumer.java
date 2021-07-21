@@ -11,8 +11,10 @@ class ProducerConsumer {
 
         SharedQueue q = new SharedQueue();
         Producer  producer1= new Producer(q, "producer1");
+        Producer  producer2= new Producer(q, "producer2");
       //  Producer  producer2= new Producer(q, "producer1");
         Consumer  consumer1= new Consumer(q, "consumer1");
+        Consumer  consumer2= new Consumer(q, "consumer2");
         //Consumer  consumer2= new Consumer(q, "consumer1");
 
     }
@@ -34,7 +36,7 @@ class SharedQueue {
                 wait();
             }
             this.elts[cnt] = cnt++;
-            System.out.println("Produced:" + this.elts[cnt - 1]);
+            System.out.println(Thread.currentThread().getName() + " Produced:" + this.elts[cnt - 1]);
             notify();
 
             }
@@ -51,7 +53,7 @@ class SharedQueue {
             Thread.sleep(5000);
             int elt = this.elts[cnt];
             cnt--;
-            System.out.println("Consumed:" + elt);
+            System.out.println(Thread.currentThread().getName() + " Consumed:" + elt);
             notify();
 
         }
@@ -73,8 +75,8 @@ class Producer implements  Runnable {
 
     @Override
     public void run() {
-        for(int i=0; i< 10 ;i++) {
-            System.out.println("Producing "+ i +"yh time ");
+        for(int i=0; i< 5 ;i++) {
+            //System.out.println("Producing "+ i +"yh time ");
             try {
                 this.q.produce();
             } catch (InterruptedException e) {
@@ -100,8 +102,8 @@ class Consumer implements  Runnable{
     @Override
     public void run() {
         try {
-            for(int i=0; i< 10 ;i++) {
-                System.out.println("Consuming "+ i +"yh time ");
+            for(int i=0; i< 5 ;i++) {
+               // System.out.println("Consuming "+ i +"yh time ");
                 this.q.consume();
             }
         }catch (InterruptedException e) {

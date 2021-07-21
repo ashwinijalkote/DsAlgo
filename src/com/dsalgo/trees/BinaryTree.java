@@ -1,133 +1,181 @@
 package com.dsalgo.trees;
 
+import java.util.Arrays;
+import java.util.Stack;
 
-import java.util.*;
+import static java.lang.Math.min;
 
-class Node {
+class BNode {
     int data;
-    int hd;
-    Node left, right;
+    BNode left, right;
 
-    Node(int data) {
+    BNode(int data) {
         this.data = data;
+        this.left = this.right = null;
+    }
+
+    public int getData() {
+        return data;
     }
 }
 
 class BinaryTree {
-    Node root;
 
-    public void insert(int data) {
-        if (root == null) {
-            root = new Node(data);
-            return;
-        }
-        Node temp = root;
-        Node temp1= temp;
-        while (temp != null) {
-            temp1= temp;
-            if (data < temp.data) {
-                temp = temp.left;
-            } else {
-                temp = temp.right;
-            }
-        }
-        temp = new Node(data);
-        if (temp.data < temp1.data ) {
-            temp1.left = temp;
+    BNode root;
 
-        } else {
-            temp1.right = temp;
-        }
 
-    }
+    public void printTree(){
 
-    public void printInorder(Node rootOfTree) {
-        Node temp = rootOfTree;
-            if (temp == null) return;
-            printInorder(rootOfTree.left);
-            System.out.print(temp.data + "\t");
-            printInorder(rootOfTree.right);
-
-    }
-
-    public void printInorderIterative(Node rootOfTree) {
-        Stack<Node> s1 = new Stack();
-        Node temp = rootOfTree;
-        Node temp1;
-
+        BNode temp = this.root;
+        Stack<BNode> s1= new Stack<>();
         while(true) {
-            while (temp != null) {
+            while(temp != null) {
                 s1.push(temp);
+                System.out.println(temp.data);
                 temp = temp.left;
             }
             if (s1.isEmpty()) return;
-            temp1 = s1.pop();
-            System.out.print(temp1.data + "\t");
-            temp = temp1.right;
+            temp = s1.pop();
+            temp = temp.right;
+        }
+    }
+    class StackNode {
+        BNode node;
+        boolean bothVisited= false;
+        StackNode(BNode node) {
+            this.node = node;
+        }
+
+        public boolean isBothVisited() {
+            return bothVisited;
+        }
+
+        public void setBothVisited(boolean bothVisited) {
+            this.bothVisited = bothVisited;
+        }
+
+        public BNode getNode() {
+            return node;
+        }
+    }
+
+    public int[] findPath(int data) {
+        BNode temp = this.root;
+        Stack<StackNode> s1 = new Stack<>();
+
+
+
+        while(true) {
+
+            while(temp != null) {
+                s1.push(new StackNode(temp));
+                if (temp.data == data) {
+                    return getPathFromStack(s1);
+                }
+                temp = temp.left;
+            }
+            if (s1.isEmpty()) {
+                return getPathFromStack(s1);
+            }
+             StackNode snode = s1.pop();
+            temp = snode.getNode();
+            if (snode.isBothVisited() == true) {
+                while(snode.isBothVisited() == true) {
+                    if (s1.isEmpty()) return getPathFromStack(s1);
+                    snode = s1.pop();
+                    temp = snode.getNode();
+                }
+            }
+                snode.setBothVisited(true);
+                s1.push(snode);
+
+
+            temp = temp.right;
+
         }
 
     }
 
-    public void bottomView(Node rootOfTree) {
-        Node temp = rootOfTree;
-        Queue<Node> q1 = new LinkedList<>();
-        TreeMap<Integer, Node> treeMap = new TreeMap();
 
-        temp.hd = 0;
-        q1.add(temp);
-        Node temp1;
-        while(!q1.isEmpty()) {
-            temp1 = q1.remove();
-            treeMap.put(temp1.hd, temp1);
-            if (temp1.left != null) {
-                temp1.left.hd = temp1.hd -1;
-                q1.add(temp1.left);
-            }
-            if (temp1.right != null) {
-                temp1.right.hd = temp1.hd + 1;
-                q1.add(temp1.right);
-            }
+    public void zigzag(BNode root ){
+        System.out.println(root.data);
+        if(root.right == null || root.left == null) {
+            return;
+        }
+        while(root.right != null) {
+            BNode left = root.left;
+            zigzag(left);
+            BNode right = root.right;
+            zigzag(right);
 
         }
 
-        for(Map.Entry<Integer, Node>  entry: treeMap.entrySet()) {
-            System.out.print(entry.getValue().data + "\t");
-        }
+
+
     }
 
-    public void printBFS(BinaryTree binaryTree) {
-        Node root = binaryTree.root;
+    public int findLCA(int data1, int data2) {
 
-        LinkedList<Node> queue = new LinkedList<>();
-        queue.add(root);
+        int [] path1 = findPath(data1);
+        int [] path2 = findPath(data2);
 
+        Arrays.stream(path1).forEach(System.out::print);
         System.out.println();
-        while(!queue.isEmpty()) {
-            Node temp = queue.remove();
-            if (temp == null) continue;
-            System.out.print(temp.data + "\t");
-            queue.add(temp.left);
-            queue.add(temp.right);
+        Arrays.stream(path2).forEach(System.out::print);
+        System.out.print("\nLCA: " );
+        int i =0;
+        int prev = -1;
+        while (i < min(path1.length, path2.length)) {
+            if (path1[i] == path2[i]) {
+                prev = path1[i];
+            } else {
+                return prev;
+            }
+            i++;
         }
+        return prev;
     }
-}
+    private int[] getPathFromStack(Stack<StackNode> s1) {
+        if(s1 == null || s1.isEmpty()) {
+            return new int[]{};
+        }
 
-class main {
-    public static void main(String args[]) {
+         return s1.stream().mapToInt(e -> e.getNode().getData()).toArray();
+    }
+
+    public static void main(String args[])  {
+
         BinaryTree binaryTree = new BinaryTree();
-        binaryTree.insert(10);
-        binaryTree.insert(20);
-        binaryTree.insert(15);
-        binaryTree.insert(5);
-        System.out.println("Inorder traversal");
-        binaryTree.printInorder(binaryTree.root);
+        binaryTree.root = new BNode(10);
+        binaryTree.root.left = new BNode(20);
+        binaryTree.root.left.right = new BNode(50);
+        binaryTree.root.left.left = new BNode(30);
+        binaryTree.root.left.left.left = new BNode(40);
+        binaryTree.root.right = new BNode(35);
+        binaryTree.root.right.left = new BNode(80);
+        binaryTree.root.right.left.right = new BNode(90);
 
-        System.out.println("\nInorder traversal");
+        binaryTree.printTree();
 
-        binaryTree.printInorderIterative(binaryTree.root);
-        System.out.println("\nBottom view of tree");
+        Arrays.stream(binaryTree.findPath(30)).forEach(System.out::print);
+        System.out.println();
+        //binaryTree.printTree();
 
-        binaryTree.bottomView(binaryTree.root);
+       //Arrays.stream(binaryTree.findPath(40)).forEach(System.out::print);
+        System.out.println();
+       // Arrays.stream(binaryTree.findPath(50)).forEach(System.out::print);
+        System.out.println();
+        //Arrays.stream(binaryTree.findPath(80)).forEach(System.out::print);
+        System.out.println();
+       // Arrays.stream(binaryTree.findPath(90)).forEach(System.out::print);
 
+       // System.out.println(binaryTree.findLCA(30, 80));
+       // System.out.println(binaryTree.findLCA(30, 50));
+       // System.out.println(binaryTree.findLCA(35, 90));
+        //System.out.println(binaryTree.findLCA(100, 90));
+
+        binaryTree.zigzag(binaryTree.root);
     }
 }
+
+

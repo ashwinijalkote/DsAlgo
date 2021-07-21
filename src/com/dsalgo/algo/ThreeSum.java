@@ -11,7 +11,8 @@ public class ThreeSum {
         for(int i=0; i < nums.length -2; i++) {
             int num1 = nums[i];
             if (-1 * nums[i] < nums[i+1] ){
-                continue;
+                //continue;
+                break;
             }
             if (i> 0 && nums[i] == nums[i-1]) {
                 continue;
@@ -35,8 +36,9 @@ public class ThreeSum {
     }
 
     public static void main(String args[]) {
-        int [] arr1 = new int []{-1,0,1,2,-1,-4,-2,-3,3,0,4};
+        int [] arr1 = new int []{-1,0,1,2,-1,-4,-2,-3,3,0,4, 5};
+        //int [] arr1 = new int []{0,1,2,3,0,4, 5};
 
-        System.out.println(ThreeSum.threeSum(arr1));
+            System.out.println(ThreeSum.threeSum(arr1));
     }
 }
