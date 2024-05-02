@@ -109,9 +109,6 @@ class BinaryTree {
             zigzag(right);
 
         }
-
-
-
     }
 
     public int findLCA(int data1, int data2) {
@@ -167,12 +164,12 @@ class BinaryTree {
         System.out.println();
         //Arrays.stream(binaryTree.findPath(80)).forEach(System.out::print);
         System.out.println();
-       // Arrays.stream(binaryTree.findPath(90)).forEach(System.out::print);
+        Arrays.stream(binaryTree.findPath(90)).forEach(System.out::print);
 
-       // System.out.println(binaryTree.findLCA(30, 80));
-       // System.out.println(binaryTree.findLCA(30, 50));
-       // System.out.println(binaryTree.findLCA(35, 90));
-        //System.out.println(binaryTree.findLCA(100, 90));
+        System.out.println(binaryTree.findLCA(30, 80));
+        System.out.println(binaryTree.findLCA(30, 50));
+        System.out.println(binaryTree.findLCA(35, 90));
+        System.out.println(binaryTree.findLCA(100, 90));
 
         binaryTree.zigzag(binaryTree.root);
     }

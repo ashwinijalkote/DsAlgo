@@ -13,7 +13,7 @@ public class MedianOfTwoSortedArrays {
         int low =0;
         int high = lengthA;
         while(low <= high) {
-            int partitionA = (0 + lengthA) / 2;
+            int partitionA = (low + high) / 2;
             int partitionB = (lengthA + lengthB + 1) / 2 - partitionA;
 
             int maxLeftA = partitionA == 0 ? Integer.MIN_VALUE : smallArrA[partitionA - 1];

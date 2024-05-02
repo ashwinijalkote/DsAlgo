@@ -69,13 +69,14 @@ class Graph {
 class main {
 
     public static void main(String args[]) {
-        Graph graph = new Graph(6);
+        Graph graph = new Graph(7);
         graph.add(5,2);
         graph.add(5,0);
         graph.add(4,0);
         graph.add(4,1);
         graph.add(2,3);
         graph.add(3,1);
+        graph.add(7,5);
         graph.printAdjacencyMatrix();
         graph.topologicalSort();
 

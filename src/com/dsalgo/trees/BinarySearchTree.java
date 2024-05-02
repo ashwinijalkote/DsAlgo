@@ -57,6 +57,7 @@ class BinarySearchTree {
         Node temp1;
 
         while(true) {
+
             while (temp != null) {
                 s1.push(temp);
                 temp = temp.left;
@@ -130,6 +131,8 @@ class BinarySearchTree {
         }
 
     }
+
+
 }
 
 class main {
@@ -150,4 +153,44 @@ class main {
         binarySearchTree.bottomView(binarySearchTree.root);
 
     }
+}
+
+
+class Node1<E> {
+    int data;
+    Node1 left, right, parent;
+}
+class BST {
+    Node1 root;
+
+    public void insert(int data) {
+        if(root == null) {
+            Node1 node1 = new Node1();
+            node1.data = data;
+            node1.left = node1.right = node1.parent = null;
+        }
+        Node1 temp = root, temp1= null;
+
+
+        while(temp != null) {
+            temp1= temp;
+            if (data < temp.data) {
+                temp = temp.left;
+            } else {
+                temp = temp.right;
+            }
+        }
+        temp = new Node1();
+        temp.data = data;
+        temp.parent = temp1;
+        if (temp1.data < data) {
+            temp1.right= temp;
+        } else {
+            temp1.left = temp;
+        }
+
+    }
+
+
+
 }

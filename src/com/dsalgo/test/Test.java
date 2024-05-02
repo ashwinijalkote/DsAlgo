@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 public class Test {
 
+
     public static void main(String[] args) throws InterruptedException {
         LinkedBlockingQueue<SuperClass> queue = new LinkedBlockingQueue();
 
@@ -46,16 +47,73 @@ public class Test {
         List<Integer> a1= Arrays.stream(s1.toArray()).map(Object::toString).map(Integer::valueOf).collect(Collectors.toList());
         System.out.println(a1);
 
+        Set<Integer> set = new HashSet<>();
+
         try{
 
             throw new Exception("exception");
         }catch(Exception e) {
             System.out.println("inside catch");
-            //System.exit(1);
-            return ;
+          //  System.exit(1);
+            //return ;
         }finally {
             System.out.println("ind=side finally after return");
         }
+
+        int sum =3;
+        sum ^= 1;
+        System.out.println(sum);
+
+        System.out.println("print hex string");
+        print();
+    }
+
+
+    public static void print() {
+
+        String str = "";
+        StringBuffer indexStr = new StringBuffer();
+
+        StringBuffer finalStr = new StringBuffer();
+        for (int i =0; i < str.length(); i++) {
+            if (str.charAt(i) == '1') {
+                finalStr.append(' ');
+                indexStr.append(' ');
+            } else {
+                finalStr.append(getHex(getValue(Character.toUpperCase(str.charAt(i)))));
+            }
+        }
+
+        System.out.println(finalStr);
+
+    }
+
+    public static int getValue(Character ch) {
+        return Character.getNumericValue(ch)  - Character.getNumericValue('a') + 1 ;
+    }
+    public static String getHex(int num) {
+        String hexString = "0123456789ABCDEF";
+        StringBuffer str = new StringBuffer();
+        int r;
+        while (num > 0) {
+            r = num%16;
+            num = num/16;
+            str.append(hexString.charAt(r));
+        }
+        return str.toString();
+    }
+
+
+    public static String getOct(int num) {
+        String octString = "01234567";
+        StringBuffer str = new StringBuffer();
+        int r;
+        while (num > 0) {
+            r = num%8;
+            num = num/8;
+            str.append(octString.charAt(r));
+        }
+        return str.toString();
     }
 
 
@@ -79,3 +137,4 @@ class Subclass2 implements SuperClass {
 class Subclass extends Subclass1 {
 
 }
+
